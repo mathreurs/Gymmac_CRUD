@@ -1,26 +1,28 @@
 package gymmac;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.*;
 import tabelas.Capoteiro;
 
 public class Main {
     
     public static void main(String[] args) {
-        /*try{
-        while (result.next()) {
-                int id = result.getInt("id_proprietario");
-                String nome = result.getString("nome_usuario");
-                String senha = result.getString("senha");
-                String email = result.getString("email");
-                
-                // print the retrieved data
-                System.out.println("ID: " + id + ", nome: " + nome + ", senha: " + senha + ", email: " + email);
-            }
-        con.closeAll();
-        }catch(Exception e){
-            System.out.println("erro");
-        }*/
+        Capoteiro cap = new Capoteiro();
+        Scanner inp = new Scanner(System.in);
+        
+        System.out.println("nome:");
+        String nome = inp.nextLine();
+        
+        System.out.println("senha:");
+        String senha = inp.next();
+        
+        System.out.println("email");
+        String email = inp.next();
+        
+        cap.insertCapoteiro(nome, senha, email);
+        
+        cap.selectCapoteiro();
+        
+        cap.deleteCapoteiro(nome);
+        
+        cap.selectCapoteiro();
     }
- 
 }

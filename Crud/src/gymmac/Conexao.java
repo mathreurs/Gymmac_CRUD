@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 public class Conexao {
     private String sql;
     
-    private Connection conect(){
+    public Connection conect(){
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -46,15 +46,6 @@ public class Conexao {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERRO res: " + e,"ERRO", JOptionPane.ERROR_MESSAGE);
             return result;
-        }
-    }
-    
-    public void closeAll(){
-        try{
-            this.con.close();
-            this.STMT.close();
-        }catch(Exception e){
-            System.out.println("Erro: " + e);
         }
     }
 }
