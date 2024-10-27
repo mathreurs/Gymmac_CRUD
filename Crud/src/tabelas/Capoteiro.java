@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class Capoteiro {
     Conexao con = new Conexao();
     
-    public void insertAcademias(String nome_usuario,String senha,String email){
+    public void insertCapoteiro(String nome_usuario,String senha,String email){
         Statement stmt = con.statSelect();
         try{
             stmt.executeUpdate("insert into capoteiro" + 

@@ -7,8 +7,6 @@ import tabelas.Capoteiro;
 public class Main {
     
     public static void main(String[] args) {
-        Capoteiro cap = new Capoteiro();
-        cap.insertcapoteiro("matheus","senha123","matheus@email");
         /*try{
         while (result.next()) {
                 int id = result.getInt("id_proprietario");
