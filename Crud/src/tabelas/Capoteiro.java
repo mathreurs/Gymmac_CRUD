@@ -28,8 +28,9 @@ public class Capoteiro {
         }
     }
     
-    public void selectCapoteiro(){
+    public boolean selectCapoteiro(String veriEmail, String veriSenha){
         ResultSet res = con.res("select * from capoteiro") ;
+        boolean verify = false;
         try{
             while(res.next()){
                 int id = res.getInt("id_proprietario");
@@ -37,11 +38,16 @@ public class Capoteiro {
                 String senha = res.getString("senha");
                 String email = res.getString("email");
                 
-                // print the retrieved data
-                System.out.println("ID: " + id + ", nome: " + nome + ", senha: " + senha + ", email: " + email);
+                System.out.println("Email:" + email + " Senha: " + senha);
+                System.out.println("Email:" + veriEmail + " Senha: " + veriSenha);
+                
+                if(veriEmail.equals(email) && veriSenha.equals(senha)){
+                    verify = true;
+                }
             }
         }catch(Exception e){
             System.out.println("ERRO Select: " + e);
+            verify = false;
         }finally{
             try{
                 res.close();
@@ -49,6 +55,8 @@ public class Capoteiro {
                 System.out.println("ERRO finally: " + e);
             }
         }
+        System.out.println(verify);
+        return verify;
     }
     
     public void deleteCapoteiro(String nome){

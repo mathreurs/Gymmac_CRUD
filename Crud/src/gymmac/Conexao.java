@@ -13,7 +13,7 @@ public class Conexao {
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Gymmac","root","root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/Gymmac","root","root");
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"ERRO: " + e,"Erro de conexão", JOptionPane.ERROR_MESSAGE);
@@ -29,7 +29,7 @@ public class Conexao {
         try {
             STMT = con.createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERRO Statement: " + ex);
         }
         return STMT;
     }
