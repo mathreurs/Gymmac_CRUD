@@ -4,8 +4,13 @@
  */
 package Telas;
 
+import gymmac.Conexao;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -20,6 +25,28 @@ public class FrmTP extends javax.swing.JFrame {
     public FrmTP() {
         
         initComponents();
+        JTableHeader JTM = SelecionarAcademia.getTableHeader();
+        JTM.setBackground(new Color(69,64,64));
+        JTM.setForeground(Color.WHITE);
+        
+        Conexao con = new Conexao();
+        ResultSet res = con.res("select * from capoteiro");
+        
+        try{
+            DefaultTableModel model = (DefaultTableModel) SelecionarAcademia.getModel();
+            
+            while(res.next()){
+                int id = res.getInt("id_proprietario");
+                String nome = res.getString("nome_usuario");
+                String senha = res.getString("senha");
+                String email = res.getString("email");
+                model.addRow(new Object[]{nome,senha,id,"teste6"});
+            } 
+        }catch(Exception e){
+            System.out.println("ERRO TABELA: " + e);
+        }
+        
+        
     }
 
     /**
@@ -34,7 +61,6 @@ public class FrmTP extends javax.swing.JFrame {
     private void initComponents() {
 
         Principal = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         Janelas = new javax.swing.JTabbedPane();
         TelaPrincipalPane = new javax.swing.JPanel();
         CadastroAcademiaPane = new javax.swing.JPanel();
@@ -51,8 +77,8 @@ public class FrmTP extends javax.swing.JFrame {
         CnpjText = new javax.swing.JTextField();
         TelefoneText = new javax.swing.JTextField();
         CepText = new javax.swing.JTextField();
-        CancelartBT = new javax.swing.JButton();
-        SalvarBT = new javax.swing.JButton();
+        CancelarAcademiaBT = new javax.swing.JLabel();
+        SalvarAcademiaBT = new javax.swing.JLabel();
         CadastroEquipamentoPane = new javax.swing.JPanel();
         CadastroEquipamentos = new javax.swing.JLabel();
         NomeEquipamento = new javax.swing.JLabel();
@@ -61,6 +87,8 @@ public class FrmTP extends javax.swing.JFrame {
         NumSerieText = new javax.swing.JTextField();
         CnpjEquipamentoText = new javax.swing.JTextField();
         NomeEquipamentoText1 = new javax.swing.JTextField();
+        CancelarEquipamentoBT = new javax.swing.JLabel();
+        SalvarAcademiaBT1 = new javax.swing.JLabel();
         SelecionarPane = new javax.swing.JPanel();
         CadastroEquipamentos1 = new javax.swing.JLabel();
         NumSerie1 = new javax.swing.JLabel();
@@ -69,7 +97,7 @@ public class FrmTP extends javax.swing.JFrame {
         CNPJ1 = new javax.swing.JLabel();
         SalvarBT1 = new javax.swing.JButton();
         TabelaScrollPane = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
+        SelecionarAcademia = new javax.swing.JTable();
         CadAcademiaPane4 = new javax.swing.JPanel();
         CadAcademiaPane5 = new javax.swing.JPanel();
         FecharBt = new javax.swing.JButton();
@@ -84,13 +112,8 @@ public class FrmTP extends javax.swing.JFrame {
 
         Principal.setBackground(new java.awt.Color(69, 64, 64));
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("LOGO");
-        jLabel1.setMaximumSize(new java.awt.Dimension(246, 187));
-        jLabel1.setMinimumSize(new java.awt.Dimension(246, 187));
-        jLabel1.setPreferredSize(new java.awt.Dimension(246, 187));
-
         Janelas.setBackground(new java.awt.Color(57, 53, 53));
+        Janelas.setForeground(new java.awt.Color(255, 255, 255));
         Janelas.setMaximumSize(new java.awt.Dimension(1445, 1080));
         Janelas.setMinimumSize(new java.awt.Dimension(1445, 1080));
         Janelas.setPreferredSize(new java.awt.Dimension(1445, 1080));
@@ -101,11 +124,11 @@ public class FrmTP extends javax.swing.JFrame {
         TelaPrincipalPane.setLayout(TelaPrincipalPaneLayout);
         TelaPrincipalPaneLayout.setHorizontalGroup(
             TelaPrincipalPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1445, Short.MAX_VALUE)
+            .addGap(0, 1440, Short.MAX_VALUE)
         );
         TelaPrincipalPaneLayout.setVerticalGroup(
             TelaPrincipalPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1045, Short.MAX_VALUE)
+            .addGap(0, 1052, Short.MAX_VALUE)
         );
 
         Janelas.addTab("tabela principal", TelaPrincipalPane);
@@ -236,46 +259,61 @@ public class FrmTP extends javax.swing.JFrame {
             }
         });
 
-        CancelartBT.setBackground(new java.awt.Color(191, 94, 73));
-        CancelartBT.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        CancelartBT.setForeground(new java.awt.Color(255, 255, 255));
-        CancelartBT.setText("Cancelar");
-        CancelartBT.setBorder(null);
-        CancelartBT.setFocusable(false);
-        CancelartBT.setMaximumSize(new java.awt.Dimension(350, 100));
-        CancelartBT.setMinimumSize(new java.awt.Dimension(350, 100));
-        CancelartBT.setPreferredSize(new java.awt.Dimension(350, 100));
-        CancelartBT.addMouseListener(new java.awt.event.MouseAdapter() {
+        CancelarAcademiaBT.setBackground(new java.awt.Color(229, 81, 49));
+        CancelarAcademiaBT.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        CancelarAcademiaBT.setForeground(new java.awt.Color(255, 255, 255));
+        CancelarAcademiaBT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CancelarAcademiaBT.setText("Cancelar");
+        CancelarAcademiaBT.setFocusable(false);
+        CancelarAcademiaBT.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        CancelarAcademiaBT.setMaximumSize(new java.awt.Dimension(350, 100));
+        CancelarAcademiaBT.setMinimumSize(new java.awt.Dimension(350, 100));
+        CancelarAcademiaBT.setOpaque(true);
+        CancelarAcademiaBT.setPreferredSize(new java.awt.Dimension(350, 100));
+        CancelarAcademiaBT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CancelartBTMouseClicked(evt);
+                CancelarAcademiaBTMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                CancelartBTMouseEntered(evt);
+                CancelarAcademiaBTMouseEntered(evt);
             }
-        });
-        CancelartBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelartBTActionPerformed(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CancelarAcademiaBTMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CancelarAcademiaBTMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                CancelarAcademiaBTMouseReleased(evt);
             }
         });
 
-        SalvarBT.setBackground(new java.awt.Color(81, 149, 124));
-        SalvarBT.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        SalvarBT.setForeground(new java.awt.Color(255, 255, 255));
-        SalvarBT.setBorder(null);
-        SalvarBT.setFocusable(false);
-        SalvarBT.setLabel("Salvar");
-        SalvarBT.setMaximumSize(new java.awt.Dimension(350, 100));
-        SalvarBT.setMinimumSize(new java.awt.Dimension(350, 100));
-        SalvarBT.setPreferredSize(new java.awt.Dimension(350, 100));
-        SalvarBT.addMouseListener(new java.awt.event.MouseAdapter() {
+        SalvarAcademiaBT.setBackground(new java.awt.Color(89, 149, 124));
+        SalvarAcademiaBT.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        SalvarAcademiaBT.setForeground(new java.awt.Color(255, 255, 255));
+        SalvarAcademiaBT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SalvarAcademiaBT.setText("Salvar");
+        SalvarAcademiaBT.setFocusable(false);
+        SalvarAcademiaBT.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        SalvarAcademiaBT.setMaximumSize(new java.awt.Dimension(350, 100));
+        SalvarAcademiaBT.setMinimumSize(new java.awt.Dimension(350, 100));
+        SalvarAcademiaBT.setOpaque(true);
+        SalvarAcademiaBT.setPreferredSize(new java.awt.Dimension(350, 100));
+        SalvarAcademiaBT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SalvarBTMouseClicked(evt);
+                SalvarAcademiaBTMouseClicked(evt);
             }
-        });
-        SalvarBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalvarBTActionPerformed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBTMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBTMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBTMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBTMouseReleased(evt);
             }
         });
 
@@ -292,25 +330,23 @@ public class FrmTP extends javax.swing.JFrame {
                         .addGap(83, 83, 83)
                         .addGroup(CadastroAcademiaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(NomeResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(CadastroAcademiaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(CepText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(TelefoneText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(CnpjText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(NomeResponsavelText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(NomeFantasiaText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(RazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(NomeFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Cep, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(RazaoSocialText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(41, Short.MAX_VALUE))
-            .addGroup(CadastroAcademiaPaneLayout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(CancelartBT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SalvarBT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                            .addGroup(CadastroAcademiaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(CadastroAcademiaPaneLayout.createSequentialGroup()
+                                    .addComponent(CancelarAcademiaBT, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(SalvarAcademiaBT, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(CepText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TelefoneText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CnpjText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(NomeResponsavelText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(NomeFantasiaText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(RazaoSocial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(NomeFantasia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Telefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Cep, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(RazaoSocialText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CNPJ, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(36, 36, 36))
         );
         CadastroAcademiaPaneLayout.setVerticalGroup(
             CadastroAcademiaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,11 +377,11 @@ public class FrmTP extends javax.swing.JFrame {
                 .addComponent(Cep, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(CepText, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(182, 182, 182)
+                .addGap(164, 164, 164)
                 .addGroup(CadastroAcademiaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CancelartBT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SalvarBT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62))
+                    .addComponent(SalvarAcademiaBT, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CancelarAcademiaBT, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         Janelas.addTab("cadastro academia", CadastroAcademiaPane);
@@ -419,6 +455,64 @@ public class FrmTP extends javax.swing.JFrame {
             }
         });
 
+        CancelarEquipamentoBT.setBackground(new java.awt.Color(229, 81, 49));
+        CancelarEquipamentoBT.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        CancelarEquipamentoBT.setForeground(new java.awt.Color(255, 255, 255));
+        CancelarEquipamentoBT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CancelarEquipamentoBT.setText("Cancelar");
+        CancelarEquipamentoBT.setFocusable(false);
+        CancelarEquipamentoBT.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        CancelarEquipamentoBT.setMaximumSize(new java.awt.Dimension(350, 100));
+        CancelarEquipamentoBT.setMinimumSize(new java.awt.Dimension(350, 100));
+        CancelarEquipamentoBT.setOpaque(true);
+        CancelarEquipamentoBT.setPreferredSize(new java.awt.Dimension(350, 100));
+        CancelarEquipamentoBT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CancelarEquipamentoBTMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CancelarEquipamentoBTMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CancelarEquipamentoBTMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CancelarEquipamentoBTMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                CancelarEquipamentoBTMouseReleased(evt);
+            }
+        });
+
+        SalvarAcademiaBT1.setBackground(new java.awt.Color(89, 149, 124));
+        SalvarAcademiaBT1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        SalvarAcademiaBT1.setForeground(new java.awt.Color(255, 255, 255));
+        SalvarAcademiaBT1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SalvarAcademiaBT1.setText("Salvar");
+        SalvarAcademiaBT1.setFocusable(false);
+        SalvarAcademiaBT1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        SalvarAcademiaBT1.setMaximumSize(new java.awt.Dimension(350, 100));
+        SalvarAcademiaBT1.setMinimumSize(new java.awt.Dimension(350, 100));
+        SalvarAcademiaBT1.setOpaque(true);
+        SalvarAcademiaBT1.setPreferredSize(new java.awt.Dimension(350, 100));
+        SalvarAcademiaBT1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBT1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBT1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBT1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBT1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                SalvarAcademiaBT1MouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout CadastroEquipamentoPaneLayout = new javax.swing.GroupLayout(CadastroEquipamentoPane);
         CadastroEquipamentoPane.setLayout(CadastroEquipamentoPaneLayout);
         CadastroEquipamentoPaneLayout.setHorizontalGroup(
@@ -431,13 +525,18 @@ public class FrmTP extends javax.swing.JFrame {
                     .addGroup(CadastroEquipamentoPaneLayout.createSequentialGroup()
                         .addGap(83, 83, 83)
                         .addGroup(CadastroEquipamentoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CnpjEquipamentoText, javax.swing.GroupLayout.PREFERRED_SIZE, 1321, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CnpjEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(NumSerieText, javax.swing.GroupLayout.PREFERRED_SIZE, 1321, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(NumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(NomeEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NomeEquipamentoText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                            .addComponent(NomeEquipamentoText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(CadastroEquipamentoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(CadastroEquipamentoPaneLayout.createSequentialGroup()
+                                    .addComponent(CancelarEquipamentoBT, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(SalvarAcademiaBT1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(CnpjEquipamentoText, javax.swing.GroupLayout.PREFERRED_SIZE, 1321, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         CadastroEquipamentoPaneLayout.setVerticalGroup(
             CadastroEquipamentoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -456,7 +555,11 @@ public class FrmTP extends javax.swing.JFrame {
                 .addComponent(CnpjEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(CnpjEquipamentoText, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(564, Short.MAX_VALUE))
+                .addGap(440, 440, 440)
+                .addGroup(CadastroEquipamentoPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CancelarEquipamentoBT, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SalvarAcademiaBT1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
         );
 
         Janelas.addTab("cadastro de equipamento", CadastroEquipamentoPane);
@@ -529,41 +632,40 @@ public class FrmTP extends javax.swing.JFrame {
             }
         });
 
-        tabela.setBackground(new java.awt.Color(59, 64, 62));
-        tabela.setForeground(new java.awt.Color(255, 255, 255));
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
+        SelecionarAcademia.setBackground(new java.awt.Color(59, 64, 62));
+        SelecionarAcademia.setForeground(new java.awt.Color(255, 255, 255));
+        SelecionarAcademia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Razão Social", "CPNJ", "CEP", "Telefone"
+                "razão social", "nome responsavel", "Telefone", "CEP"
             }
-        ));
-        tabela.setFocusable(false);
-        tabela.setMaximumSize(new java.awt.Dimension(1363, 757));
-        tabela.setMinimumSize(new java.awt.Dimension(1363, 757));
-        tabela.setPreferredSize(new java.awt.Dimension(1363, 757));
-        tabela.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        TabelaScrollPane.setViewportView(tabela);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        SelecionarAcademia.setFocusable(false);
+        SelecionarAcademia.setMaximumSize(new java.awt.Dimension(1363, 757));
+        SelecionarAcademia.setMinimumSize(new java.awt.Dimension(1363, 757));
+        SelecionarAcademia.setPreferredSize(new java.awt.Dimension(1363, 757));
+        SelecionarAcademia.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        SelecionarAcademia.getTableHeader().setReorderingAllowed(false);
+        SelecionarAcademia.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                SelecionarAcademiaAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        TabelaScrollPane.setViewportView(SelecionarAcademia);
 
         javax.swing.GroupLayout SelecionarPaneLayout = new javax.swing.GroupLayout(SelecionarPane);
         SelecionarPane.setLayout(SelecionarPaneLayout);
@@ -588,7 +690,7 @@ public class FrmTP extends javax.swing.JFrame {
                                 .addComponent(CnpjPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(SalvarBT1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         SelecionarPaneLayout.setVerticalGroup(
             SelecionarPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -787,9 +889,6 @@ public class FrmTP extends javax.swing.JFrame {
             PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PrincipalLayout.createSequentialGroup()
                 .addGroup(PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PrincipalLayout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(SelecionarBT, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RelatorioBT, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PrincipalLayout.createSequentialGroup()
@@ -797,16 +896,13 @@ public class FrmTP extends javax.swing.JFrame {
                         .addComponent(FecharBt, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(CadEquipamentoBT, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CadAcademiaBT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
                 .addComponent(Janelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         PrincipalLayout.setVerticalGroup(
             PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PrincipalLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
+                .addGap(281, 281, 281)
                 .addComponent(CadAcademiaBT, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(CadEquipamentoBT, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -847,23 +943,6 @@ public class FrmTP extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_FecharBtActionPerformed
 
-    private void SalvarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarBTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SalvarBTActionPerformed
-
-    private void SalvarBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarBTMouseClicked
-
-    }//GEN-LAST:event_SalvarBTMouseClicked
-
-    private void CancelartBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelartBTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CancelartBTActionPerformed
-
-    private void CancelartBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelartBTMouseClicked
-        //quando clicado ira fechar a tela de cadastro de academia
-        dispose();
-    }//GEN-LAST:event_CancelartBTMouseClicked
-
     private void CepTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CepTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CepTextActionPerformed
@@ -899,10 +978,6 @@ public class FrmTP extends javax.swing.JFrame {
     private void CnpjEquipamentoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CnpjEquipamentoTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CnpjEquipamentoTextActionPerformed
-
-    private void CancelartBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelartBTMouseEntered
-        // mudanca de cor quando mouse entra no botao
-    }//GEN-LAST:event_CancelartBTMouseEntered
 
     private void NomeEquipamentoText1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomeEquipamentoText1ActionPerformed
         // TODO add your handling code here:
@@ -1014,6 +1089,90 @@ public class FrmTP extends javax.swing.JFrame {
         RelatorioBT.setBackground(new Color(107, 179, 144));
     }//GEN-LAST:event_RelatorioBTMouseReleased
 
+    private void CancelarAcademiaBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarAcademiaBTMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarAcademiaBTMouseClicked
+
+    private void CancelarAcademiaBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarAcademiaBTMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarAcademiaBTMouseEntered
+
+    private void CancelarAcademiaBTMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarAcademiaBTMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarAcademiaBTMouseExited
+
+    private void CancelarAcademiaBTMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarAcademiaBTMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarAcademiaBTMousePressed
+
+    private void CancelarAcademiaBTMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarAcademiaBTMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarAcademiaBTMouseReleased
+
+    private void SalvarAcademiaBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBTMouseClicked
+
+    private void SalvarAcademiaBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBTMouseEntered
+
+    private void SalvarAcademiaBTMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBTMouseExited
+
+    private void SalvarAcademiaBTMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBTMousePressed
+
+    private void SalvarAcademiaBTMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBTMouseReleased
+
+    private void CancelarEquipamentoBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarEquipamentoBTMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarEquipamentoBTMouseClicked
+
+    private void CancelarEquipamentoBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarEquipamentoBTMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarEquipamentoBTMouseEntered
+
+    private void CancelarEquipamentoBTMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarEquipamentoBTMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarEquipamentoBTMouseExited
+
+    private void CancelarEquipamentoBTMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarEquipamentoBTMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarEquipamentoBTMousePressed
+
+    private void CancelarEquipamentoBTMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelarEquipamentoBTMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelarEquipamentoBTMouseReleased
+
+    private void SalvarAcademiaBT1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBT1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBT1MouseClicked
+
+    private void SalvarAcademiaBT1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBT1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBT1MouseEntered
+
+    private void SalvarAcademiaBT1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBT1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBT1MouseExited
+
+    private void SalvarAcademiaBT1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBT1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBT1MousePressed
+
+    private void SalvarAcademiaBT1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBT1MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalvarAcademiaBT1MouseReleased
+
+    private void SelecionarAcademiaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_SelecionarAcademiaAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SelecionarAcademiaAncestorAdded
+
     /**
      * @param args the command line arguments
      */
@@ -1060,7 +1219,8 @@ public class FrmTP extends javax.swing.JFrame {
     private javax.swing.JPanel CadastroEquipamentoPane;
     private javax.swing.JLabel CadastroEquipamentos;
     private javax.swing.JLabel CadastroEquipamentos1;
-    private javax.swing.JButton CancelartBT;
+    private javax.swing.JLabel CancelarAcademiaBT;
+    private javax.swing.JLabel CancelarEquipamentoBT;
     private javax.swing.JLabel Cep;
     private javax.swing.JTextField CepText;
     private javax.swing.JLabel CnpjEquipamento;
@@ -1083,8 +1243,10 @@ public class FrmTP extends javax.swing.JFrame {
     private javax.swing.JTextField RazaoSocialSelecionar;
     private javax.swing.JTextField RazaoSocialText;
     private javax.swing.JLabel RelatorioBT;
-    private javax.swing.JButton SalvarBT;
+    private javax.swing.JLabel SalvarAcademiaBT;
+    private javax.swing.JLabel SalvarAcademiaBT1;
     private javax.swing.JButton SalvarBT1;
+    private javax.swing.JTable SelecionarAcademia;
     private javax.swing.JLabel SelecionarBT;
     private javax.swing.JPanel SelecionarPane;
     private javax.swing.JScrollPane TabelaScrollPane;
@@ -1092,7 +1254,5 @@ public class FrmTP extends javax.swing.JFrame {
     private javax.swing.JLabel Telefone;
     private javax.swing.JTextField TelefoneText;
     private javax.swing.JLabel cadastroacademia;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

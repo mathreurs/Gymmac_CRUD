@@ -5,8 +5,6 @@
 package Telas;
 
 import java.awt.Color;
-import javax.swing.JOptionPane;
-import tabelas.Capoteiro;
 
 /**
  *
@@ -38,14 +36,16 @@ public class FrmLogin extends javax.swing.JFrame {
         senha = new javax.swing.JLabel();
         Email = new javax.swing.JLabel();
         FecharBt = new javax.swing.JButton();
-        AcessarBt = new javax.swing.JButton();
+        AcessarBT = new javax.swing.JLabel();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 33)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(500, 600));
         setMinimumSize(new java.awt.Dimension(500, 600));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(500, 600));
 
         Principal.setBackground(new java.awt.Color(57, 53, 53));
 
@@ -63,12 +63,7 @@ public class FrmLogin extends javax.swing.JFrame {
         EmailText.setForeground(new java.awt.Color(255, 255, 255));
         EmailText.setToolTipText("Digite seu E-mail");
         EmailText.setBorder(null);
-        EmailText.setMargin(new java.awt.Insets(2, 4, 2, 2));
-        EmailText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailTextActionPerformed(evt);
-            }
-        });
+        EmailText.setMargin(new java.awt.Insets(3, 3, 3, 3));
 
         SenhaText.setBackground(new java.awt.Color(85, 79, 79));
         SenhaText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -116,20 +111,30 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        AcessarBt.setBackground(new java.awt.Color(81, 149, 124));
-        AcessarBt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        AcessarBt.setForeground(new java.awt.Color(255, 255, 255));
-        AcessarBt.setText("Acessar");
-        AcessarBt.setBorder(null);
-        AcessarBt.setFocusable(false);
-        AcessarBt.addMouseListener(new java.awt.event.MouseAdapter() {
+        AcessarBT.setBackground(new java.awt.Color(81, 149, 124));
+        AcessarBT.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        AcessarBT.setForeground(new java.awt.Color(255, 255, 255));
+        AcessarBT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AcessarBT.setText("Acessar");
+        AcessarBT.setMaximumSize(new java.awt.Dimension(79, 33));
+        AcessarBT.setMinimumSize(new java.awt.Dimension(79, 33));
+        AcessarBT.setOpaque(true);
+        AcessarBT.setPreferredSize(new java.awt.Dimension(79, 33));
+        AcessarBT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AcessarBtMouseClicked(evt);
+                AcessarBTMouseClicked(evt);
             }
-        });
-        AcessarBt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcessarBtActionPerformed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AcessarBTMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AcessarBTMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                AcessarBTMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                AcessarBTMouseReleased(evt);
             }
         });
 
@@ -143,12 +148,15 @@ public class FrmLogin extends javax.swing.JFrame {
             .addGroup(PrincipalLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AcessarBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AcessarBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(SenhaText)
-                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmailText)
-                    .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addGroup(PrincipalLayout.createSequentialGroup()
+                        .addGroup(PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(40, 40, 40))
         );
         PrincipalLayout.setVerticalGroup(
@@ -165,9 +173,9 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SenhaText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
-                .addComponent(AcessarBt, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addGap(89, 89, 89)
+                .addComponent(AcessarBT, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
 
         getContentPane().add(Principal, java.awt.BorderLayout.CENTER);
@@ -189,22 +197,6 @@ public class FrmLogin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_FecharBtMouseClicked
 
-    private void AcessarBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcessarBtActionPerformed
-        Capoteiro cap = new Capoteiro();
-        if(cap.selectCapoteiro(EmailText.getText(), SenhaText.getText()) == true){
-            FrmTP frm = new FrmTP(); 
-            frm.setVisible(true); 
-            dispose(); 
-        }else{
-            JOptionPane.showMessageDialog(null, "SENHA INCORRETA");
-        }
-         
-    }//GEN-LAST:event_AcessarBtActionPerformed
-
-    private void AcessarBtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBtMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AcessarBtMouseClicked
-
     private void FecharBtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FecharBtMouseEntered
         // muda de cor quando mouse entra 
         FecharBt.setForeground(Color.red);
@@ -215,9 +207,33 @@ public class FrmLogin extends javax.swing.JFrame {
         FecharBt.setForeground(Color.white);
     }//GEN-LAST:event_FecharBtMouseExited
 
-    private void EmailTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmailTextActionPerformed
+    private void AcessarBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBTMouseClicked
+        //chama o menu principal
+         FrmTP frm = new FrmTP(); 
+        frm.setVisible(true); 
+        dispose(); 
+
+    }//GEN-LAST:event_AcessarBTMouseClicked
+
+    private void AcessarBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBTMouseEntered
+        //troca a cor do fundo quando o mouse entra na area do botão
+        AcessarBT.setBackground(new Color(107, 179, 144));
+    }//GEN-LAST:event_AcessarBTMouseEntered
+
+    private void AcessarBTMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBTMouseExited
+        //troca a cor do botao quanddo o mouse sai da area dele
+        AcessarBT.setBackground(new Color(89, 149, 124));
+    }//GEN-LAST:event_AcessarBTMouseExited
+
+    private void AcessarBTMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBTMousePressed
+        // troca a cor do botao quando ele for precionado
+        AcessarBT.setBackground(new Color(74, 129, 107));
+    }//GEN-LAST:event_AcessarBTMousePressed
+
+    private void AcessarBTMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBTMouseReleased
+        // troca a cor do botao quando ele for solto:
+        AcessarBT.setBackground(new Color(107, 179, 144));
+    }//GEN-LAST:event_AcessarBTMouseReleased
 
     /**
      * @param args the command line arguments
@@ -255,7 +271,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AcessarBt;
+    private javax.swing.JLabel AcessarBT;
     private javax.swing.JLabel Email;
     private javax.swing.JTextField EmailText;
     private javax.swing.JButton FecharBt;
