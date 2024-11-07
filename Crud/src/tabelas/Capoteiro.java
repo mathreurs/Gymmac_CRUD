@@ -35,8 +35,6 @@ public class Capoteiro {
         boolean verify = false;
         try{
             while(res.next()){
-                int id = res.getInt("id_proprietario");
-                String nome = res.getString("nome_usuario");
                 String senha = res.getString("senha");
                 String email = res.getString("email");
                 
