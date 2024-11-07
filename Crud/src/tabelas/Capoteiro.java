@@ -7,10 +7,11 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// Programa para a tabela capoteiro ( Usuários para serem logados no sistema | para caso seja necessário ) 
 public class Capoteiro {
     Conexao con = new Conexao();
     
-    public void insertCapoteiro(String nome_usuario,String senha,String email){
+    /*public void insertCapoteiro(String nome_usuario,String senha,String email){
         Statement stmt = con.statSelect();
         try{
             stmt.executeUpdate("insert into capoteiro" + 
@@ -26,8 +27,9 @@ public class Capoteiro {
                 Logger.getLogger(Capoteiro.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    }*/
     
+    // Selecionar o login para entrar no sistema
     public boolean selectCapoteiro(String veriEmail, String veriSenha){
         ResultSet res = con.res("select * from capoteiro") ;
         boolean verify = false;
@@ -38,20 +40,17 @@ public class Capoteiro {
                 String senha = res.getString("senha");
                 String email = res.getString("email");
                 
-                System.out.println("Email:" + email + " Senha: " + senha);
-                System.out.println("Email:" + veriEmail + " Senha: " + veriSenha);
-                
                 if(veriEmail.equals(email) && veriSenha.equals(senha)){
                     verify = true;
                 }
             }
-        }catch(Exception e){
+        }catch(SQLException e){
             System.out.println("ERRO Select: " + e);
             verify = false;
         }finally{
             try{
                 res.close();
-            }catch(Exception e){
+            }catch(SQLException e){
                 System.out.println("ERRO finally: " + e);
             }
         }
@@ -59,7 +58,7 @@ public class Capoteiro {
         return verify;
     }
     
-    public void deleteCapoteiro(String nome){
+    /*public void deleteCapoteiro(String nome){
         try {
             Statement stmt = con.conect().createStatement();
             String SQL = "delete from capoteiro where nome_usuario = '"+nome+"'";
@@ -70,5 +69,5 @@ public class Capoteiro {
             System.out.println("Erro delete cap: " + ex);
         }
         
-    }
+    }*/
 }

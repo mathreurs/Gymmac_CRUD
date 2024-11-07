@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import tabelas.CadastroAcad;
 
 /**
  *
@@ -28,24 +29,6 @@ public class FrmTP extends javax.swing.JFrame {
         JTableHeader JTM = SelecionarAcademia.getTableHeader();
         JTM.setBackground(new Color(69,64,64));
         JTM.setForeground(Color.WHITE);
-        
-        Conexao con = new Conexao();
-        ResultSet res = con.res("select * from capoteiro");
-        
-        try{
-            DefaultTableModel model = (DefaultTableModel) SelecionarAcademia.getModel();
-            
-            while(res.next()){
-                int id = res.getInt("id_proprietario");
-                String nome = res.getString("nome_usuario");
-                String senha = res.getString("senha");
-                String email = res.getString("email");
-                model.addRow(new Object[]{nome,senha,id,"teste6"});
-            } 
-        }catch(Exception e){
-            System.out.println("ERRO TABELA: " + e);
-        }
-        
         
     }
 
@@ -633,6 +616,7 @@ public class FrmTP extends javax.swing.JFrame {
         });
 
         SelecionarAcademia.setBackground(new java.awt.Color(59, 64, 62));
+        SelecionarAcademia.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         SelecionarAcademia.setForeground(new java.awt.Color(255, 255, 255));
         SelecionarAcademia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -671,7 +655,8 @@ public class FrmTP extends javax.swing.JFrame {
         SelecionarPane.setLayout(SelecionarPaneLayout);
         SelecionarPaneLayout.setHorizontalGroup(
             SelecionarPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SelecionarPaneLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelecionarPaneLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(SelecionarPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(SelecionarPaneLayout.createSequentialGroup()
                         .addGap(469, 469, 469)
@@ -690,7 +675,7 @@ public class FrmTP extends javax.swing.JFrame {
                                 .addComponent(CnpjPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(SalvarBT1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
         SelecionarPaneLayout.setVerticalGroup(
             SelecionarPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1110,7 +1095,8 @@ public class FrmTP extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelarAcademiaBTMouseReleased
 
     private void SalvarAcademiaBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMouseClicked
-        // TODO add your handling code here:
+        CadastroAcad acad = new CadastroAcad();
+        acad.insertAcademia(RazaoSocialText.getText(),NomeFantasiaText.getText(),NomeResponsavelText.getText(),Integer.parseInt(CnpjText.getText()),Integer.parseInt(TelefoneText.getText()),Integer.parseInt(CepText.getText()));
     }//GEN-LAST:event_SalvarAcademiaBTMouseClicked
 
     private void SalvarAcademiaBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalvarAcademiaBTMouseEntered

@@ -5,6 +5,9 @@
 package Telas;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
+import tabelas.Capoteiro;
 
 /**
  *
@@ -42,10 +45,8 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(500, 600));
         setMinimumSize(new java.awt.Dimension(500, 600));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 600));
 
         Principal.setBackground(new java.awt.Color(57, 53, 53));
 
@@ -61,9 +62,15 @@ public class FrmLogin extends javax.swing.JFrame {
         EmailText.setBackground(new java.awt.Color(85, 79, 79));
         EmailText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         EmailText.setForeground(new java.awt.Color(255, 255, 255));
+        EmailText.setText(" ");
         EmailText.setToolTipText("Digite seu E-mail");
         EmailText.setBorder(null);
         EmailText.setMargin(new java.awt.Insets(3, 3, 3, 3));
+        EmailText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailTextActionPerformed(evt);
+            }
+        });
 
         SenhaText.setBackground(new java.awt.Color(85, 79, 79));
         SenhaText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -151,11 +158,11 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(AcessarBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(SenhaText)
                     .addComponent(EmailText)
-                    .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                     .addGroup(PrincipalLayout.createSequentialGroup()
                         .addGroup(PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(40, 40, 40))
         );
@@ -175,7 +182,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addComponent(SenhaText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89)
                 .addComponent(AcessarBT, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addContainerGap())
         );
 
         getContentPane().add(Principal, java.awt.BorderLayout.CENTER);
@@ -208,10 +215,24 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_FecharBtMouseExited
 
     private void AcessarBTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcessarBTMouseClicked
-        //chama o menu principal
-         FrmTP frm = new FrmTP(); 
-        frm.setVisible(true); 
-        dispose(); 
+        // Verifica se o login é válido ou não
+        
+        Capoteiro cap = new Capoteiro();
+        
+        try{
+            if(cap.selectCapoteiro(EmailText.getText(), SenhaText.getText())){  
+                //chama o menu principal
+                FrmTP frm = new FrmTP(); 
+                frm.setVisible(true); 
+                dispose(); 
+            }else{
+                JOptionPane.showMessageDialog(null, "Email ou senha errados, tente novamente");
+            }
+        }catch(HeadlessException e){
+            JOptionPane.showMessageDialog(null, "Erro login: "  + e);
+        }
+        
+
 
     }//GEN-LAST:event_AcessarBTMouseClicked
 
@@ -234,6 +255,10 @@ public class FrmLogin extends javax.swing.JFrame {
         // troca a cor do botao quando ele for solto:
         AcessarBT.setBackground(new Color(107, 179, 144));
     }//GEN-LAST:event_AcessarBTMouseReleased
+
+    private void EmailTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailTextActionPerformed
 
     /**
      * @param args the command line arguments
